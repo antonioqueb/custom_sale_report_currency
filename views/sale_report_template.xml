@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Heredar la plantilla de totales de impuestos -->
     <template id="document_tax_totals_currency" inherit_id="sale.document_tax_totals">
-        <!-- Modificar el span que muestra el total general -->
-        <xpath expr="//span[@t-field='tax_totals.amount_total']" position="replace">
+        <!-- Buscar directamente el campo tax_totals['amount_total'] -->
+        <xpath expr="//span[contains(@t-field, 'tax_totals')]" position="replace">
             <span t-field="tax_totals.amount_total" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
         </xpath>
     </template>
