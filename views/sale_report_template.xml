@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Heredar la plantilla principal del reporte -->
+    <template id="inherit_report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <!-- Añadir currency_id a tax_totals -->
+        <xpath expr="//t[@t-set='tax_totals']" position="replace">
+            <t t-set="tax_totals" t-value="{**doc.tax_totals, 'currency_id': doc.currency_id}"/>
+        </xpath>
+    </template>
+
     <!-- Heredar la plantilla de totales de impuestos -->
     <template id="document_tax_totals_currency" inherit_id="sale.document_tax_totals">
         <!-- Modificar el Total General en el PDF -->
-        <xpath expr="//span[contains(@t-out, 'tax_totals') and contains(@t-out, 'amount_total')]" position="replace">
+        <xpath expr="//span[contains(@t-out, 'amount_total')]" position="replace">
             <span t-out="tax_totals['amount_total']" 
                   t-options="{
                       'widget': 'monetary', 
